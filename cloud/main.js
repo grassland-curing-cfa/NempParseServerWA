@@ -3,6 +3,7 @@
  * Git repo: 				https://github.com/grassland-curing-cfa/NempParseServerWA
  * Heroku app: 				https://nemp-wa-dev.herokuapp.com/parse
  * Initial checkin date: 	22/11/2016 copied and modified from main.js for NempParseServerNT
+ 							01/12/2016: NEMP-1-154: Running the "applyValidationByException" Cloud function creates incorrect String on the "SharedBy" column of the GCUR_OBSERVATION table
  * Following-up check date:	
  * 							
  * https://nemp-wa-dev.herokuapp.com/parse/
@@ -418,7 +419,7 @@ Parse.Cloud.beforeSave("GCUR_OBSERVATION", function(request, response) {
 	console.log("* AreaCuring[ " + newAreaCuring + "], ValidatorCuring[" + newValidatorCuring + "], AdminCuring[" + newAdminCuring + "]");
 	
 	//Parse.Cloud.useMasterKey();
-	sharedWithJurisArr = [];
+	var sharedWithJurisArr = [];
 	
 	if(request.object.isNew()) {
 		// Adding a new GCUR_OBSERVATION object
