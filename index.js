@@ -42,18 +42,19 @@ var api = new ParseServer({
   verifyUserEmails: true,
   preventLoginWithUnverifiedEmail: false, // defaults to false
   //Your apps name. This will appear in the subject and body of the emails that are sent.
-  appName: process.env.APP_NAME,
+  appName: process.env.APP_NAME
+  //,
   // The email adapter
-  emailAdapter: {
-    module: 'parse-server-simple-mailgun-adapter',
-    options: {
-      // The address that your emails come from
-      fromAddress: process.env.EMAIL_ADDR_CFA_NEMP,
-      // Your domain from mailgun.com
-      domain: process.env.MG_DOMAIN,
-      // Your API key from mailgun.com
-      apiKey: process.env.MG_KEY
-    }
+  //emailAdapter: {
+  //  module: 'parse-server-simple-mailgun-adapter',
+  //  options: {
+  //    // The address that your emails come from
+  //    fromAddress: process.env.EMAIL_ADDR_CFA_NEMP,
+  //    // Your domain from mailgun.com
+  //    domain: process.env.MG_DOMAIN,
+  //    // Your API key from mailgun.com
+  //    apiKey: process.env.MG_KEY
+  //  }
   }
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
