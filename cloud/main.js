@@ -1994,7 +1994,6 @@ Parse.Cloud.define("getAllFuelLoadLookupItems", (request) => {
 	console.log("*** getAllFuelLoadLookupItems");
 	query.find().then((results) => {
 		console.log("*** results");
-		console.log("*** " + results.length);
 		for (let i = 0; i < results.length; i++) {
 			console.log(results[i].get("height") + " -" + results[i].get("cover") + " - " + results[i].get("fuel_load"));
 			let rod = {
@@ -2007,6 +2006,7 @@ Parse.Cloud.define("getAllFuelLoadLookupItems", (request) => {
 		}
 
 		//response.success(returnedJSON);
+		console.log("***" + returnedJSON.length);
 		return returnedJSON;
 	}, function(error) {
 		//response.error("GCUR_LOOKUP_FUELLOAD lookup failed");
