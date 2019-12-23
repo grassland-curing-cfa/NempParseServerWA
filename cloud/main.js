@@ -1233,7 +1233,7 @@ Parse.Cloud.define("getAllSimpleMMRUserRoleForUser", async (request) => {
 	
     const queryUser = new Parse.Query(Parse.User);
 	queryUser.equalTo("objectId", userObjectId);
-	const user = queryUser.first({ useMasterKey: true });
+	const user = await queryUser.first({ useMasterKey: true });
 	
 	
 	userName = user.get("username");
@@ -1243,7 +1243,7 @@ Parse.Cloud.define("getAllSimpleMMRUserRoleForUser", async (request) => {
 	queryMMR.include("role");
 	queryMMR.limit(1000);
 	
-	const results = queryMMR.find({ useMasterKey: true });
+	const results = await queryMMR.find({ useMasterKey: true });
 	
 	let roleStatsusForUser = null;
 	let roleStatusList = []
