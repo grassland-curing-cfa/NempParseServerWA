@@ -2004,9 +2004,11 @@ Parse.Cloud.define("getAllFuelLoadLookupItems", function(request, response) {
 			returnedJSON.push(rod);
 		}
 
-		response.success(returnedJSON);
+		//response.success(returnedJSON);
+		return returnedJSON;
 	}, function(error) {
-	      response.error("GCUR_LOOKUP_FUELLOAD lookup failed");
+		//response.error("GCUR_LOOKUP_FUELLOAD lookup failed");
+		throw new Error("GCUR_LOOKUP_FUELLOAD lookup failed");
 	});
 });
 
@@ -2026,9 +2028,11 @@ Parse.Cloud.define("getAllAdjByLocDists", function(request, response) {
 			returnedJSON.push(dist);
 		}
 
-		response.success(returnedJSON);
+		//response.success(returnedJSON);
+		return returnedJSON;
 	}, function(error) {
-	      response.error("GCUR_ADJUST_LOCATION_LOOKUP_DIST lookup failed");
+		//response.error("GCUR_ADJUST_LOCATION_LOOKUP_DIST lookup failed");
+		throw new Error("GCUR_ADJUST_LOCATION_LOOKUP_DIST lookup failed");
 	});
 });
 
