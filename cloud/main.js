@@ -1273,9 +1273,11 @@ Parse.Cloud.define("getAllSimpleMMRUserRoleForUser", function(request, response)
 	        "userName": userName,
 	        "roleStatusList": roleStatusList
 	      }
-	      response.success(roleStatsusForUser);
+	      //response.success(roleStatsusForUser
+		  return roleStatsusForUser;
 	  }, function(error) {
-		  response.error("Error: " + error.code + " " + error.message);
+		  //response.error("Error: " + error.code + " " + error.message);
+		   throw new Error("Error: " + error.code + " " + error.message);
 	  });
 	});
 
