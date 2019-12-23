@@ -1986,7 +1986,7 @@ Parse.Cloud.define("getCurrPrevSimpleObservationsForLocation", function(request,
 	});	 
 });
 
-Parse.Cloud.define("getAllFuelLoadLookupItems", async (request) => {
+Parse.Cloud.define("getAllFuelLoadLookupItems", (request) => {
 	var query = new Parse.Query("GCUR_LOOKUP_FUELLOAD");
 	query.limit(1000);
 	query.ascending("height");
