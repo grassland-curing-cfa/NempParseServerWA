@@ -1991,8 +1991,8 @@ Parse.Cloud.define("getAllFuelLoadLookupItems", (request) => {
 	query.limit(1000);
 	query.ascending("height");
 	var returnedJSON = [];
-	
-	query.find().then(function(results) {
+	console.log("*** getAllFuelLoadLookupItems");
+	query.find().then((results) => {
 		for (var i = 0; i < results.length; i++) {
 			//console.log(results[i].get("height") + " -" + results[i].get("cover") + " - " + results[i].get("fuel_load"));
 			var rod = {
