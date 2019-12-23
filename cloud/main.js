@@ -1227,40 +1227,43 @@ Parse.Cloud.define("getAllSimpleMMRUserRoleForRole", function(request, response)
   });
 });
 
-Parse.Cloud.define("getAllSimpleMMRUserRoleForUser", function(request, response) {
-	var userObjectId = request.params.objectId;
-	var userName = null;
+Parse.Cloud.define("getAllSimpleMMRUserRoleForUser", async (request) => {
+	let userObjectId = request.params.objectId;
+	let userName = null;
 	
-    var queryUser = new Parse.Query(Parse.User);
+    const queryUser = new Parse.Query(Parse.User);
 	queryUser.equalTo("objectId", userObjectId);
-	queryUser.first({ useMasterKey: true }).then(function (user) {
-		  userName = user.get("username");
-		  var queryMMR = new Parse.Query("GCUR_MMR_USER_ROLE");
-		  // Include the post data with each comment
-		  queryMMR.include("user");
-		  queryMMR.include("role");
-		  queryMMR.limit(1000);
-		  return queryMMR.find({ useMasterKey: true });
-	}).then(function(results) {
-		  var roleStatsusForUser = null;
-	      var roleStatusList = []
+	const user = queryUser.first({ useMasterKey: true });
+	
+	
+	userName = user.get("username");
+	const queryMMR = new Parse.Query("GCUR_MMR_USER_ROLE");
+	// Include the post data with each comment
+	queryMMR.include("user");
+	queryMMR.include("role");
+	queryMMR.limit(1000);
+	
+	const results = queryMMR.find({ useMasterKey: true });
+	
+	let roleStatsusForUser = null;
+	let roleStatusList = []
 	      
-	      for (var i = 0; i < results.length; i++) {
+	for (let i = 0; i < results.length; i++) {
 
-	        var user = results[i].get("user");
-	        var usrObjId = user.id;
+	        let user = results[i].get("user");
+	        let usrObjId = user.id;
 	        if (usrObjId == userObjectId) {
-	        	var role = results[i].get("role");
-	            var roleName = role.get("name");
-	            var roleObjId = role.id;
-	            var simpleRole = {
+	        	let role = results[i].get("role");
+	            let roleName = role.get("name");
+	            let roleObjId = role.id;
+	            let simpleRole = {
 	              "objectId": roleObjId,
 	    		  "roleName": roleName
 	    	    };
 	            
-	            var status = results[i].get("status");
+	            let status = results[i].get("status");
 	            
-	            var roleStatus = {
+	            let roleStatus = {
 	              "simpleRole": simpleRole,
 	              "status": status
 	            };
@@ -1275,10 +1278,7 @@ Parse.Cloud.define("getAllSimpleMMRUserRoleForUser", function(request, response)
 	      }
 	      //response.success(roleStatsusForUser
 		  return roleStatsusForUser;
-	  }, function(error) {
-		  //response.error("Error: " + error.code + " " + error.message);
-		   throw new Error("Error: " + error.code + " " + error.message);
-	  });
+	  
 	});
 
 Parse.Cloud.define("getSimpleObservationsForUser", function(request, response) {
@@ -1991,7 +1991,6 @@ Parse.Cloud.define("getAllFuelLoadLookupItems", async (request) => {
 	query.limit(1000);
 	query.ascending("height");
 	let returnedJSON = [];
-	console.log("*** getAllFuelLoadLookupItems");
 	const results = await query.find();
 	
 	
@@ -2011,28 +2010,24 @@ Parse.Cloud.define("getAllFuelLoadLookupItems", async (request) => {
 	return returnedJSON;
 });
 
-Parse.Cloud.define("getAllAdjByLocDists", function(request, response) {
-	var query = new Parse.Query("GCUR_ADJUST_LOCATION_LOOKUP_DIST");
+Parse.Cloud.define("getAllAdjByLocDists", async (request) => {
+	const query = new Parse.Query("GCUR_ADJUST_LOCATION_LOOKUP_DIST");
 	query.limit(1000);
 	query.ascending("distance");
-	var returnedJSON = [];
+	let returnedJSON = [];
 	
-	query.find().then(function(results) {
-		for (var i = 0; i < results.length; i++) {
+	const results = await query.find();
+	for (var i = 0; i < results.length; i++) {
 			//console.log(results[i].get("height") + " -" + results[i].get("cover") + " - " + results[i].get("fuel_load"));
 			var dist = {
 					"d" : results[i].get("distance")
 			};
 			
 			returnedJSON.push(dist);
-		}
+	}
 
-		//response.success(returnedJSON);
-		return returnedJSON;
-	}, function(error) {
-		//response.error("GCUR_ADJUST_LOCATION_LOOKUP_DIST lookup failed");
-		throw new Error("GCUR_ADJUST_LOCATION_LOOKUP_DIST lookup failed");
-	});
+	//response.success(returnedJSON);
+	return returnedJSON;
 });
 
 Parse.Cloud.define("getAllLocationsWithLinkedStatusForObservers", function(request, response) {
