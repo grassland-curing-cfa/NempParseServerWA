@@ -1986,15 +1986,16 @@ Parse.Cloud.define("getCurrPrevSimpleObservationsForLocation", function(request,
 	});	 
 });
 
-Parse.Cloud.define("getAllFuelLoadLookupItems", (request) => {
+Parse.Cloud.define("getAllFuelLoadLookupItems", async (request) => {
 	const query = new Parse.Query("GCUR_LOOKUP_FUELLOAD");
 	query.limit(1000);
 	query.ascending("height");
 	let returnedJSON = [];
 	console.log("*** getAllFuelLoadLookupItems");
-	query.find().then((results) => {
-		console.log("*** results");
-		for (let i = 0; i < results.length; i++) {
+	const results = await query.find();
+	
+	
+	for (let i = 0; i < results.length; i++) {
 			console.log(results[i].get("height") + " -" + results[i].get("cover") + " - " + results[i].get("fuel_load"));
 			let rod = {
 					"height" : results[i].get("height"),
@@ -2003,15 +2004,11 @@ Parse.Cloud.define("getAllFuelLoadLookupItems", (request) => {
 			};
 			
 			returnedJSON.push(rod);
-		}
+	}
 
 		//response.success(returnedJSON);
-		console.log("***" + returnedJSON.length);
-		return returnedJSON;
-	}, function(error) {
-		//response.error("GCUR_LOOKUP_FUELLOAD lookup failed");
-		throw new Error("GCUR_LOOKUP_FUELLOAD lookup failed");
-	});
+	console.log("***" + returnedJSON.length);
+	return returnedJSON;
 });
 
 Parse.Cloud.define("getAllAdjByLocDists", function(request, response) {
