@@ -1987,16 +1987,17 @@ Parse.Cloud.define("getCurrPrevSimpleObservationsForLocation", function(request,
 });
 
 Parse.Cloud.define("getAllFuelLoadLookupItems", (request) => {
-	var query = new Parse.Query("GCUR_LOOKUP_FUELLOAD");
+	const query = new Parse.Query("GCUR_LOOKUP_FUELLOAD");
 	query.limit(1000);
 	query.ascending("height");
-	var returnedJSON = [];
+	let returnedJSON = [];
 	console.log("*** getAllFuelLoadLookupItems");
 	query.find().then((results) => {
+		console.log("*** results");
 		console.log("*** " + results.length);
-		for (var i = 0; i < results.length; i++) {
+		for (let i = 0; i < results.length; i++) {
 			console.log(results[i].get("height") + " -" + results[i].get("cover") + " - " + results[i].get("fuel_load"));
-			var rod = {
+			let rod = {
 					"height" : results[i].get("height"),
 					"cover" : results[i].get("cover"),
 					"fuel_load" : results[i].get("fuel_load")
